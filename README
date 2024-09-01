@@ -1,0 +1,8 @@
+/*
+	TODO:
+		1. Counter of character movements
+		2. Use MiniLibX images instead of putting pixels one by one - DONE
+		3. User input
+		4. Map pareser - We can display map
+		5. Walls & Sprites
+*/
