@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:29:47 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/02 22:48:39 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/02 23:28:48 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include "../libft/libft.h"
 
 # ifdef __APPLE__
-#  include ",./minilibx_opengl_20191021/mlx.h"
+#  include "../minilibx_opengl_20191021/mlx.h"
 #  include "key_macos.h"
 # elif __linux__
 #  include "../minilibx-linux/mlx.h"
