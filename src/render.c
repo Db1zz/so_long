@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:37:35 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/01 14:43:26 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/02 16:51:57 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	get_textures(t_game *data)
 {
-	const char *paths[5] = {
+	char *paths[5] = {
 		"/home/gonische/Desktop/projects/so_long/textures/Coat.xpm",
 		"/home/gonische/Desktop/projects/so_long/textures/Dirt.xpm",
 		"/home/gonische/Desktop/projects/so_long/textures/Glass.xpm",
@@ -28,7 +28,7 @@ void	get_textures(t_game *data)
 	i = 0;
 	while (i < 5)
 	{
-		data->textures[i] = mlx_xpm_file_to_image(data->mlx, (char *)paths[i],
+		data->textures[i] = mlx_xpm_file_to_image(data->mlx, paths[i],
 			&data->textures_rect.w, &data->textures_rect.h);
 		if (!data->textures[i])
 		{
