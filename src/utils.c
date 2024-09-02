@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:37:37 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/02 19:21:34 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/02 21:14:27 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,6 @@ void	destroy_data(t_game *data)
 	#ifdef __linux__
 	if (data->mlx)
 		mlx_destroy_display(data->mlx);
-	#endif //__linux__
+	#endif // __linux__
 	free(data);
 }

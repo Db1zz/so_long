@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:29:47 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/01 14:43:50 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/02 22:48:39 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,15 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "../minilibx-linux/mlx.h"
 # include "../libft/libft.h"
+
+# ifdef __APPLE__
+#  include ",./minilibx_opengl_20191021/mlx.h"
+#  include "key_macos.h"
+# elif __linux__
+#  include "../minilibx-linux/mlx.h"
+#  include "key_linux.h"
+# endif // __linux__
 
 /*
 	Macroses
@@ -43,6 +50,12 @@ typedef struct t_rect
 	int	h;
 }	t_rect;
 
+typedef	struct	t_pos
+{
+	int	x;
+	int	y;
+}	t_pos;
+
 typedef struct t_game
 {
 	char	**map;
@@ -52,6 +65,7 @@ typedef struct t_game
 	void	*mlx;
 	void	*mlx_win;
 	t_rect	win_rect;
+	t_pos	char_pos;
 }	t_game;
 
 /*
@@ -83,5 +97,9 @@ bool	check_borders(const char **map, const t_rect *rect);
 void	free_2dmatrix(char **matrix);
 void	destroy_data(t_game *data);
 
+/*
+	Input.c
+*/
+int		user_input_handler(int key, t_game *data);
 
 #endif // SO_LONG_H

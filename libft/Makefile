@@ -57,7 +57,6 @@ SRCS =	ft_atoi.c 							\
 		ft_printf/src/ft_get.c 				\
 		ft_printf/src/ft_istrue.c 			\
 		ft_printf/src/ft_printf.c 			\
-		ft_printf/src/ft_utils_second.c 	\
 		ft_printf/src/ft_utils.c			\
 		get_next_line/get_next_line_utils.c	\
 		get_next_line/get_next_line.c		\

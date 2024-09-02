@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 16:19:35 by gonische          #+#    #+#             */
-/*   Updated: 2024/07/23 19:48:27 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/02 21:41:53 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,6 @@ size_t	ft_get_number_size(int64_t number)
 	return (result);
 }
 
-void	*ft_calloc(size_t count, size_t size)
-{
-	void	*result;
-
-	result = malloc(count * size);
-	if (result == NULL)
-		return (NULL);
-	ft_bzero(result, count * size);
-	return (result);
-}
-
 int	ft_printstr(char *str)
 {
 	int	i;
@@ -100,3 +89,17 @@ int	ft_printstr(char *str)
 	}
 	return (c);
 }
+
+int	ft_get_hex_size(uint64_t hex)
+{
+	int	i;
+
+	i = 1;
+	while (hex / 16)
+	{
+		hex /= 16;
+		i++;
+	}
+	return (i);
+}
+

@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:37:35 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/02 16:51:57 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/02 22:50:06 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,8 @@
 void	get_textures(t_game *data)
 {
 	char *paths[5] = {
-		"/home/gonische/Desktop/projects/so_long/textures/Coat.xpm",
-		"/home/gonische/Desktop/projects/so_long/textures/Dirt.xpm",
-		"/home/gonische/Desktop/projects/so_long/textures/Glass.xpm",
-		"/home/gonische/Desktop/projects/so_long/textures/Stone.xpm",
-		"/home/gonische/Desktop/projects/so_long/textures/Wood.xpm"
-	};
+		"textures/Coat.xpm", "textures/Dirt.xpm", "textures/Glass.xpm",
+		"textures/Stone.xpm", "textures/Wood.xpm"};
 	int	i;
 
 	data->textures_rect.w = TEXTURE_W;

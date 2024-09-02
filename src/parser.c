@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:33:19 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/01 14:46:06 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/02 22:58:37 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,9 @@ static void	get_map_size(t_game *data, const char *map_path)
 	fd = open(map_path, O_RDONLY, 0644);
 	if (fd < 0)
 		fatal_error("Map cannot be opened or it does not exist.");
-	while (true)
+	line = get_next_line(fd);
+	while (line)
 	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		// Note: get_next_line will also include \n to the string.
 		line_lenght = ft_strlen(line);
 		free(line);
 		if (data->map_rect.w == 0)
@@ -40,11 +37,12 @@ static void	get_map_size(t_game *data, const char *map_path)
 			fatal_error("Lines are of different width.");
 		}
 		data->map_rect.h++;
+		line = get_next_line(fd);
 	}
 	close(fd);
 }
 
-static void	parse_map(t_game *data, const char *map_path)
+static void	load_map(t_game *data, const char *map_path)
 {
 	int		fd;
 	int		i;
@@ -80,12 +78,12 @@ static bool	is_map_valid(t_game *data)
 	return (true);
 }
 
-static void	load_map(t_game *data, const char *map_path)
+static void	parse_map(t_game *data, const char *map_path)
 {
 	// TODO: Init rect variable.
 	if (!data)
-		fatal_error("load_map data is NULL.");
-	parse_map(data, map_path);
+		fatal_error("parse_map data is NULL.");
+	load_map(data, map_path);
 	if (!is_map_valid(data))
 	{
 		destroy_data(data);
@@ -102,12 +100,17 @@ t_game	*init_game(const char *map_path)
 	data = ft_calloc(1, sizeof(t_game));
 	if (!data)
 		fatal_error("init_game ft_calloc() failed to allocate memory.");
-	load_map(data, map_path);
+	parse_map(data, map_path);
 	data->mlx = mlx_init();
 	get_textures(data);
 	// TODO: Calculate the width and height size of the window by map size * texture size
 	data->mlx_win = mlx_new_window(data->mlx, data->win_rect.w, data->win_rect.h, "so_long");
+	// Render Whole map
 	render_map(data);
+	// Install comrade hook
+	mlx_key_hook(data->mlx_win, &user_input_handler, data);
+	// mlx_hook(data->mlx_win, 2, 1, );
+	// Put everythin in the mlx loop
 	mlx_loop(data->mlx);
 	return (data);
 }
