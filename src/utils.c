@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:37:37 by gonische          #+#    #+#             */
-/*   Updated: 2024/08/31 13:12:54 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/02 19:21:34 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ void	destroy_data(t_game *data)
 	free_textures(data);
 	if (data->mlx_win)
 		mlx_destroy_window(data->mlx, data->mlx_win);
+	#ifdef __linux__
 	if (data->mlx)
 		mlx_destroy_display(data->mlx);
+	#endif //__linux__
 	free(data);
 }
