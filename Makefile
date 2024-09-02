@@ -1,35 +1,47 @@
 # Project settings
 NAME = so_long
 CC = cc
-# Tiny Note:
-# -g flag is used to debug my project, without it debuggers will not
-# get the debug information and I will not be able to debug my project.
-# After finishing the project, just comment out this flag ;)
-CFLAGS = -Wall -Wextra -I/usr/include -g -Imlx_linux -Lmlx_linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz #-fsanitize=address -g
-SRCS =	src/map_checkers.c \
-		src/error.c		\
-		src/game.c		\
-		src/input.c		\
-		src/main.c		\
-		src/parser.c	\
-		src/render.c	\
-		src/utils.c		\
+UNAME_S := $(shell uname -s)
+CFLAGS = -Wall -Wextra #-Werror
+MINILIBX_TGZ_NAME = MiniLibX.tgz
+ifeq ($(UNAME_S), Linux)
+	LIB_URL = https://cdn.intra.42.fr/document/document/26192/minilibx-linux.tgz
+	FLAGS_MINILIBX = -I/usr/include -Imlx_linux -Lmlx_linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+	MINILIBX_DIR = ./minilibx-linux
+#else ifeq ($(UNAME_S), Darwin)
+#	LIB_URL = https://cdn.intra.42.fr/document/document/26193/minilibx_opengl.tgz
+#	FLAGS_MINILIBX = -Lmlx -lmlx -framework OpenGL -framework AppKit
+#	MINILIBX_DIR = ./minilibx_opengl_20191021
+endif
+SRCS =	src/map_checkers.c	\
+		src/error.c			\
+		src/game.c			\
+		src/input.c			\
+		src/main.c			\
+		src/parser.c		\
+		src/render.c		\
+		src/utils.c			\
 
 OBJS = $(SRCS:.c=.o)
 LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
-MINILIBX_DIR = ./minilibx-linux
 MINILIBX = $(MINILIBX_DIR)/libmlx.a
 
-all: $(MINILIBX) $(LIBFT) $(NAME)
+all: $(MINILIBX_DIR) $(MINILIBX) $(LIBFT) $(NAME)
 
-$(MINILIBX):
+$(MINILIBX_DIR):
+	@echo "Downloading MiniLibX for $(UNAME_S) from $(LIB_URL)"
+	curl -L -o $(MINILIBX_TGZ_NAME) $(LIB_URL)
+	@echo "Download completed."
+	tar -xzf $(MINILIBX_TGZ_NAME)
+	rm -f $(MINILIBX_TGZ_NAME)
+$(MINILIBX): $(MINILIBX_DIR)
 	$(MAKE) -C $(MINILIBX_DIR)
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
-$(NAME): $(SRCS)
+$(NAME): $(MINILIBX) $(SRCS)
 	$(CC) $(CFLAGS) $(SRCS) $(LIBFT) $(MINILIBX) -o $(NAME)
 
 clean:
