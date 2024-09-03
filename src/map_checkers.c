@@ -6,60 +6,85 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 08:29:55 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/03 13:09:50 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:20:37 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-bool	check_borders(const char **map, const t_rect *rect)
+bool	check_borders(const char **map, const t_pos *size)
 {
-	int	i;
-	int	j;
+	int	x;
+	int	y;
 
-	i = 0;
-	j = 0;
-	while (!(i >= rect->w && j >= rect->h))
+	x = 0;
+	y = 0;
+	while (!(x >= size->x && y >= size->y))
 	{
-		// Check top and bottom
-		if (i < rect->w && (map[0][i] != C_BORDER || map[rect->h - 1][i] != C_BORDER))
+		if (x < size->x && (map[0][x] != C_BORDER || map[size->y - 1][x] != C_BORDER))
 			return (false);
-		// Check sides
-		if (j < rect->h && (map[j][0] != C_BORDER || map[j][rect->w - 1] != C_BORDER))
+		if (y < size->y && (map[y][0] != C_BORDER || map[y][size->x - 1] != C_BORDER))
 			return (false);
-		i++;
-		j++;
+		x++;
+		y++;
 	}
 	return (true);
 }
 
-bool	check_items(t_game *data)
+bool	get_items(int *loot, int *exit, char **map)
 {
 	int		x;
 	int		y;
-	int		exit;
 
+	if (!map)
+		return (false);
 	y = 0;
-	exit = 0;
-	while (data->map[y])
+	while (map[y])
 	{
 		x = 0;
-		while (data->map[y][x])
+		while (map[y][x])
 		{
-			if (data->map[y][x] == C_LOOT)
-				data->map_loot++;
-			else if (data->map[y][x] == C_EXIT)
-				exit++;
+			if (map[y][x] == C_LOOT)
+				(*loot)++;
+			else if (map[y][x] == C_EXIT)
+				(*exit)++;
 			x++;
 		}
 		y++;
 	}
-	if (data->map_loot > 0 && exit == 1)
+	if (*loot > 0 && *exit == 1)
 		return (true);
 	return (false);
 }
 
-void	flood_fill()
+static void	dfs(int x, int y, t_pos map_size, char **map)
 {
-	
+	if ((x <= 0 || y <= 0) || (x >= map_size.x || y >= map_size.y)
+		|| map[y][x] == C_BORDER)
+		return ;
+	map[y][x] = C_BORDER;
+	dfs(x + 1, y, map_size, map);
+	dfs(x - 1, y, map_size, map);
+	dfs(x, y + 1, map_size, map);
+	dfs(x, y - 1, map_size, map);
+}
+
+bool	are_objectives_reachable(t_game *data)
+{
+	char	**map_copy;
+	int		loot;
+	int		exit;
+
+	loot = 0;
+	exit = 0;
+	map_copy = cpy_2dmatrix(data->map);
+	if (!map_copy)
+	{
+		destroy_data(data);
+		fatal_error(ERROR_MALLOC);
+	} 
+	dfs(data->char_pos.x, data->char_pos.y, data->map_size, map_copy);
+	get_items(&loot, &exit, map_copy);
+	free_2dmatrix(map_copy);
+	return (loot == 0 && exit == 0);
 }

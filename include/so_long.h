@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:29:47 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/03 11:55:43 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:41:26 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@
 # define TEXTURE_W 80
 # define TEXTURE_H 80
 
+# define ERROR_MALLOC "Buy more RAM lol"
+
 /*
 	Structs
 */
@@ -61,7 +63,7 @@ typedef struct t_game
 	char	**map;
 	void	*textures[5];
 	t_rect	textures_rect;
-	t_rect	map_rect;
+	t_pos	map_size;
 	int		map_loot;
 	void	*mlx;
 	void	*mlx_win;
@@ -96,14 +98,16 @@ void	get_character_pos(t_game *data);
 /*
 	map_checker.c
 */
-bool	check_borders(const char **map, const t_rect *rect);
-bool	check_items(t_game *data);
+bool	check_borders(const char **map, const t_pos *size);
+bool	get_items(int *loot, int *exit, char **map);
+bool	are_objectives_reachable(t_game *data);
 
 /*
 	utils.c
 */
 void	free_2dmatrix(char **matrix);
 void	destroy_data(t_game *data);
+char	**cpy_2dmatrix(char **to_copy);
 
 /*
 	Input.c

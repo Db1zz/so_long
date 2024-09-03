@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:37:37 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/03 11:28:44 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:04:44 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	free_2dmatrix(char **matrix)
 void	destroy_data(t_game *data)
 {
 	if (!data)
-		fatal_error("Trying to free data which was not allocated.");
+		fatal_error("Tried to free t_game which was not allocated.");
 	if (data->map)
 		free_2dmatrix(data->map);
 	free_textures(data);
@@ -47,4 +47,38 @@ void	destroy_data(t_game *data)
 		mlx_destroy_display(data->mlx);
 	#endif // __linux__
 	free(data);
+}
+
+static size_t	get_2dmatrix_size(char **matrix)
+{
+	size_t	i;
+
+	i = 0;
+	while (matrix[i])
+		i++;
+	return (i);
+}
+
+char	**cpy_2dmatrix(char **to_copy)
+{
+	char	**result;
+	size_t	result_size;
+	size_t	i;
+
+	if (!to_copy)
+		return (NULL);
+	result_size = get_2dmatrix_size(to_copy);
+	result = ft_calloc(result_size + 1, sizeof(char *));
+	i = 0;
+	while (i < result_size)
+	{
+		result[i] = ft_strdup(to_copy[i]);
+		if (!result[i])
+		{
+			free_2dmatrix(result);
+			return (NULL);
+		}
+		i++;
+	}
+	return (result);
 }

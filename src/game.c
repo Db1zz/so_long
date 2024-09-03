@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:33:16 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/03 01:31:06 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:59:07 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,25 @@
 
 void	get_character_pos(t_game *data)
 {	
-	int	i;
-	int	j;
+	int	x;
+	int	y;
 
 	if (!data)
 		return ;
-	i = 0;
-	while (data->map[i])
+	y = 0;
+	while (data->map[y])
 	{
-		j = 0;
-		while (data->map[i][j])
+		x = 0;
+		while (data->map[y][x])
 		{
-			if (data->map[i][j] == C_PLAYER)
+			if (data->map[y][x] == C_PLAYER)
 			{
-				data->char_pos.x = j;
-				data->char_pos.y = i;
+				data->char_pos.x = x;
+				data->char_pos.y = y;
 				return ;
 			}
-			j++;
+			x++;
 		}
-		i++;
+		y++;
 	}
 }

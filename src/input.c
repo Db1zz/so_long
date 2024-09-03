@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:35:26 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/03 12:18:29 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:35:58 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,5 @@ int user_input_handler(int key, t_game *data)
 		move_character(data->char_pos.x, data->char_pos.y + 1, data);
 	else if (key == K_D)
 		move_character(data->char_pos.x + 1, data->char_pos.y, data);
+	return (0);
 }

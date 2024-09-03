@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:33:19 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/03 11:55:51 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:54:12 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@ static void	get_map_size(t_game *data, const char *map_path)
 	{
 		line_lenght = ft_strlen(line);
 		free(line);
-		if (data->map_rect.w == 0)
-			data->map_rect.w = line_lenght;
-		if (data->map_rect.w > line_lenght
-			|| data->map_rect.w < line_lenght)
+		if (data->map_size.x == 0)
+			data->map_size.x = line_lenght;
+		if (data->map_size.x > line_lenght
+			|| data->map_size.x < line_lenght)
 		{
 			destroy_data(data);
-			fatal_error("Lines are of different width.");
+			fatal_error("Lines are of different lenght.");
 		}
-		data->map_rect.h++;
+		data->map_size.y++;
 		line = get_next_line(fd);
 	}
 	close(fd);
@@ -48,30 +48,33 @@ static void	load_map(t_game *data, const char *map_path)
 	int		i;
 
 	get_map_size(data, map_path);
-	if (!data->map_rect.h|| !data->map_rect.w)
+	if (!data->map_size.y|| !data->map_size.x)
 		fatal_error("parse_map incorrect map size.");
 	fd = open(map_path, O_RDONLY);
-	data->map = ft_calloc(data->map_rect.h + 1, sizeof(char *));
+	data->map = ft_calloc(data->map_size.y + 1, sizeof(char *));
 	if (!data->map)
 	{
 		destroy_data(data);
 		fatal_error("parse_map ft_calloc() failed to allocate memory.");	
 	}
 	i = 0;
-	while (i < data->map_rect.h)
+	while (i < data->map_size.y)
 		data->map[i++] = get_next_line(fd);
 	close(fd);
 }
 
 static bool	is_map_valid(t_game *data)
 {
-	if (!check_borders((const char **)data->map, &data->map_rect))
+	int exit;
+	int	loot;
+
+	exit = 0;
+	loot = 0;
+	if (!check_borders((const char **)data->map, &data->map_size))
 		return (false);
-	if (!check_items(data))
+	if (!are_objectives_reachable(data))
 		return (false);
-	// Check path to the door and loot
-	
-	// Check size
+	data->map_loot = loot;
 	return (true);
 }
 
@@ -81,8 +84,8 @@ static void	parse_map(t_game *data, const char *map_path)
 		fatal_error("parse_map data is NULL.");
 	load_map(data, map_path);
 	get_character_pos(data);
-	data->win_rect.w = data->map_rect.w * TEXTURE_W;
-	data->win_rect.h = data->map_rect.h * TEXTURE_H;
+	data->win_rect.w = data->map_size.x * TEXTURE_W;
+	data->win_rect.h = data->map_size.y * TEXTURE_H;
 	if (!is_map_valid(data))
 	{
 		destroy_data(data);
