@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:37:35 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/03 19:05:48 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:52:22 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	get_textures(t_game *data)
 {
 	int			i;
-	const char	*paths[5] = {
+	const char	*paths[TEXTURE_BUFFER_SIZE] = {
 		"textures/Coat.xpm", "textures/Dirt.xpm", "textures/Glass.xpm",
 		"textures/Stone.xpm", "textures/Wood.xpm"};
 
@@ -24,7 +24,7 @@ void	get_textures(t_game *data)
 	i = 0;
 	while (i < 5)
 	{
-		data->textures[i] = mlx_xpm_file_to_image(data->mlx, paths[i],
+		data->textures[i] = mlx_xpm_file_to_image(data->mlx, (char *)paths[i],
 				&data->textures_rect.w, &data->textures_rect.h);
 		if (!data->textures[i])
 		{

@@ -2,7 +2,7 @@
 NAME = so_long
 CC = cc
 UNAME_S := $(shell uname -s)
-CFLAGS = -Wall -Wextra -fsanitize=address -g #-Werror
+CFLAGS = -Wall -Wextra -Werror
 MINILIBX_TGZ_NAME = MiniLibX.tgz
 ifeq ($(UNAME_S), Linux)
 	LIB_URL = https://cdn.intra.42.fr/document/document/26192/minilibx-linux.tgz

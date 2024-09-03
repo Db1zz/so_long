@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:33:19 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/03 19:10:51 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/03 20:16:48 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,20 +64,19 @@ static void	load_map(t_game *data, const char *map_path)
 
 static bool	is_map_valid(t_game *data)
 {
-	int	exit;
-	int	loot;
+	int	exit;	
 
 	exit = 0;
-	loot = 0;
 	if (!check_borders((const char **)data->map, &data->map_size))
+		return (false);
+	if (!get_items(&data->map_loot, &exit, data->map))
 		return (false);
 	if (!are_objectives_reachable(data))
 		return (false);
-	data->map_loot = loot;
 	return (true);
 }
 
-static void	parse_map(t_game *data, const char *map_path)
+void	parse_map(t_game *data, const char *map_path)
 {
 	if (!data)
 		fatal_error("parse_map data is NULL.");
@@ -90,22 +89,4 @@ static void	parse_map(t_game *data, const char *map_path)
 		destroy_data(data);
 		fatal_error("Map is not valid.");
 	}
-}
-
-t_game	*init_game(const char *map_path)
-{
-	t_game	*data;
-
-	data = ft_calloc(1, sizeof(t_game));
-	if (!data)
-		fatal_error("init_game ft_calloc() failed to allocate memory.");
-	parse_map(data, map_path);
-	data->mlx = mlx_init();
-	get_textures(data);
-	data->mlx_win = mlx_new_window(data->mlx, data->win_rect.w,
-			data->win_rect.h, "so_long");
-	render_map(data);
-	mlx_key_hook(data->mlx_win, &user_input_handler, data);
-	mlx_loop(data->mlx);
-	return (data);
 }

@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:29:47 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/03 19:14:31 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:51:43 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define C_PLAYER 'P'
 # define C_EMPTY '0'
 
+# define TEXTURE_BUFFER_SIZE 5
 # define TEXTURE_W 80
 # define TEXTURE_H 80
 
@@ -61,7 +62,7 @@ typedef struct t_pos
 typedef struct t_game
 {
 	char	**map;
-	void	*textures[5];
+	void	*textures[TEXTURE_BUFFER_SIZE];
 	t_rect	textures_rect;
 	t_pos	map_size;
 	int		map_loot;
@@ -75,7 +76,7 @@ typedef struct t_game
 /*
 	parser.c
 */
-t_game	*init_game(const char *map_path);
+void	parse_map(t_game *data, const char *map_path);
 
 /*
 	render.c
@@ -94,6 +95,7 @@ void	fatal_error(const char *err);
 	game.c
 */
 void	get_character_pos(t_game *data);
+t_game	*init_game(const char *map_path);
 
 /*
 	map_checker.c

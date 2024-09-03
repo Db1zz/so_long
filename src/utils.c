@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:37:37 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/03 19:03:31 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:50:52 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	free_textures(t_game *data)
 	if (!data)
 		fatal_error("free_textures: t_game * is NULL");
 	i = 0;
-	while (data->textures[i])
+	while (i < 5)
 		mlx_destroy_image(data->mlx, data->textures[i++]);
 }
 
@@ -37,13 +37,16 @@ void	destroy_data(t_game *data)
 {
 	if (!data)
 		fatal_error("Tried to free t_game which was not allocated.");
+	free_textures(data);
 	if (data->map)
 		free_2dmatrix(data->map);
-	free_textures(data);
 	if (data->mlx_win)
 		mlx_destroy_window(data->mlx, data->mlx_win);
 	if (data->mlx)
+	{
 		mlx_destroy_display(data->mlx);
+		free(data->mlx);
+	}
 	free(data);
 }
 
