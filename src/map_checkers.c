@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 08:29:55 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/03 17:20:37 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:13:25 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,11 @@ bool	check_borders(const char **map, const t_pos *size)
 	y = 0;
 	while (!(x >= size->x && y >= size->y))
 	{
-		if (x < size->x && (map[0][x] != C_BORDER || map[size->y - 1][x] != C_BORDER))
+		if (x < size->x
+			&& (map[0][x] != C_BORDER || map[size->y - 1][x] != C_BORDER))
 			return (false);
-		if (y < size->y && (map[y][0] != C_BORDER || map[y][size->x - 1] != C_BORDER))
+		if (y < size->y
+			&& (map[y][0] != C_BORDER || map[y][size->x - 1] != C_BORDER))
 			return (false);
 		x++;
 		y++;
@@ -62,6 +64,11 @@ static void	dfs(int x, int y, t_pos map_size, char **map)
 	if ((x <= 0 || y <= 0) || (x >= map_size.x || y >= map_size.y)
 		|| map[y][x] == C_BORDER)
 		return ;
+	if (map[y][x] == C_EXIT)
+	{
+		map[y][x] = C_BORDER;
+		return ;
+	}
 	map[y][x] = C_BORDER;
 	dfs(x + 1, y, map_size, map);
 	dfs(x - 1, y, map_size, map);
@@ -82,7 +89,7 @@ bool	are_objectives_reachable(t_game *data)
 	{
 		destroy_data(data);
 		fatal_error(ERROR_MALLOC);
-	} 
+	}
 	dfs(data->char_pos.x, data->char_pos.y, data->map_size, map_copy);
 	get_items(&loot, &exit, map_copy);
 	free_2dmatrix(map_copy);

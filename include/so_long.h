@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:29:47 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/03 16:41:26 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:14:31 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct t_rect
 	int	h;
 }	t_rect;
 
-typedef	struct	t_pos
+typedef struct t_pos
 {
 	int	x;
 	int	y;

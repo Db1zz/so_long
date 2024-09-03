@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:37:35 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/03 11:05:49 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:05:48 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	get_textures(t_game *data)
 {
-	char *paths[5] = {
+	int			i;
+	const char	*paths[5] = {
 		"textures/Coat.xpm", "textures/Dirt.xpm", "textures/Glass.xpm",
 		"textures/Stone.xpm", "textures/Wood.xpm"};
-	int	i;
 
 	data->textures_rect.w = TEXTURE_W;
 	data->textures_rect.h = TEXTURE_H;
@@ -25,7 +25,7 @@ void	get_textures(t_game *data)
 	while (i < 5)
 	{
 		data->textures[i] = mlx_xpm_file_to_image(data->mlx, paths[i],
-			&data->textures_rect.w, &data->textures_rect.h);
+				&data->textures_rect.w, &data->textures_rect.h);
 		if (!data->textures[i])
 		{
 			destroy_data(data);
@@ -60,7 +60,7 @@ void	*map_char_to_img(t_game *data, char c)
 void	render_map(t_game *data)
 {
 	int		x;
-	int 	y;
+	int		y;
 	void	*img;
 
 	y = 0;

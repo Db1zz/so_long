@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 16:19:35 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/02 21:41:53 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:14:10 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,3 @@ int	ft_get_hex_size(uint64_t hex)
 	}
 	return (i);
 }
-

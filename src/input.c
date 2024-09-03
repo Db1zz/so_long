@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:35:26 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/03 16:35:58 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:13:33 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	move_character(int x, int y, t_game *data)
 	data->char_pos.y = y;
 }
 
-int user_input_handler(int key, t_game *data)
+int	user_input_handler(int key, t_game *data)
 {
 	ft_printf("x: %d y: %d\n", data->char_pos.x, data->char_pos.y);
 	if (key == K_W)
