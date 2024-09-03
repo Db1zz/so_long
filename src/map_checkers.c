@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 08:29:55 by gonische          #+#    #+#             */
-/*   Updated: 2024/08/31 12:49:11 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/03 13:09:50 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,35 @@ bool	check_borders(const char **map, const t_rect *rect)
 		j++;
 	}
 	return (true);
+}
+
+bool	check_items(t_game *data)
+{
+	int		x;
+	int		y;
+	int		exit;
+
+	y = 0;
+	exit = 0;
+	while (data->map[y])
+	{
+		x = 0;
+		while (data->map[y][x])
+		{
+			if (data->map[y][x] == C_LOOT)
+				data->map_loot++;
+			else if (data->map[y][x] == C_EXIT)
+				exit++;
+			x++;
+		}
+		y++;
+	}
+	if (data->map_loot > 0 && exit == 1)
+		return (true);
+	return (false);
+}
+
+void	flood_fill()
+{
+	
 }

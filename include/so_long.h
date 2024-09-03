@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:29:47 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/02 23:28:48 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/03 11:55:43 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,12 @@ typedef struct t_game
 	void	*textures[5];
 	t_rect	textures_rect;
 	t_rect	map_rect;
+	int		map_loot;
 	void	*mlx;
 	void	*mlx_win;
 	t_rect	win_rect;
 	t_pos	char_pos;
+	int		char_loot;
 }	t_game;
 
 /*
@@ -78,18 +80,24 @@ t_game	*init_game(const char *map_path);
 */
 void	get_textures(t_game *data);
 void	render_map(t_game *data);
+void	render_texture(int x, int y, void *texture, t_game *data);
 
 /*
-
 	error.c
 */
 void	display_error(const char *err);
 void	fatal_error(const char *err);
 
 /*
+	game.c
+*/
+void	get_character_pos(t_game *data);
+
+/*
 	map_checker.c
 */
 bool	check_borders(const char **map, const t_rect *rect);
+bool	check_items(t_game *data);
 
 /*
 	utils.c

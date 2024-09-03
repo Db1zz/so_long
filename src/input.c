@@ -6,25 +6,37 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:35:26 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/02 23:06:27 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/03 12:18:29 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-int	get_direction_object(int key, t_game *data)
+static void	move_character(int x, int y, t_game *data)
 {
-	
+	if (data->map[y][x] == C_BORDER || (data->map[y][x] == C_EXIT
+		&& data->char_loot != data->map_loot))
+		return ;
+	else if (data->map[y][x] == C_LOOT)
+	{
+		render_texture(x, y, data->textures[4], data);
+		data->char_loot++;
+	}
+	render_texture(data->char_pos.x, data->char_pos.y, data->textures[4], data);
+	render_texture(x, y, data->textures[3], data);
+	data->char_pos.x = x;
+	data->char_pos.y = y;
 }
 
 int user_input_handler(int key, t_game *data)
 {
+	ft_printf("x: %d y: %d\n", data->char_pos.x, data->char_pos.y);
 	if (key == K_W)
-		ft_printf("W\n");
+		move_character(data->char_pos.x, data->char_pos.y - 1, data);
 	else if (key == K_A)
-		ft_printf("A\n");
+		move_character(data->char_pos.x - 1, data->char_pos.y, data);
 	else if (key == K_S)
-		ft_printf("S\n");
+		move_character(data->char_pos.x, data->char_pos.y + 1, data);
 	else if (key == K_D)
-		ft_printf("D\n");
+		move_character(data->char_pos.x + 1, data->char_pos.y, data);
 }

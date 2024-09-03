@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:33:19 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/02 22:58:37 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/03 11:55:51 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,32 +65,29 @@ static void	load_map(t_game *data, const char *map_path)
 
 static bool	is_map_valid(t_game *data)
 {
-	// Check borders
-	// if (!check_borders((const char **)data->map, &data->map_rect))
-	// 	return (false);
-	// Check gates
-	
-	// Check loot
-
+	if (!check_borders((const char **)data->map, &data->map_rect))
+		return (false);
+	if (!check_items(data))
+		return (false);
 	// Check path to the door and loot
-
+	
 	// Check size
 	return (true);
 }
 
 static void	parse_map(t_game *data, const char *map_path)
 {
-	// TODO: Init rect variable.
 	if (!data)
 		fatal_error("parse_map data is NULL.");
 	load_map(data, map_path);
+	get_character_pos(data);
+	data->win_rect.w = data->map_rect.w * TEXTURE_W;
+	data->win_rect.h = data->map_rect.h * TEXTURE_H;
 	if (!is_map_valid(data))
 	{
 		destroy_data(data);
 		fatal_error("Map is not valid.");
 	}
-	data->win_rect.w = data->map_rect.w * TEXTURE_W;
-	data->win_rect.h = data->map_rect.h * TEXTURE_H;
 }
 
 t_game	*init_game(const char *map_path)
@@ -103,14 +100,9 @@ t_game	*init_game(const char *map_path)
 	parse_map(data, map_path);
 	data->mlx = mlx_init();
 	get_textures(data);
-	// TODO: Calculate the width and height size of the window by map size * texture size
 	data->mlx_win = mlx_new_window(data->mlx, data->win_rect.w, data->win_rect.h, "so_long");
-	// Render Whole map
 	render_map(data);
-	// Install comrade hook
 	mlx_key_hook(data->mlx_win, &user_input_handler, data);
-	// mlx_hook(data->mlx_win, 2, 1, );
-	// Put everythin in the mlx loop
 	mlx_loop(data->mlx);
 	return (data);
 }

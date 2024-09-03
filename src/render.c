@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:37:35 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/02 22:50:06 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/03 11:05:49 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@ void	get_textures(t_game *data)
 	}
 }
 
+void	render_texture(int x, int y, void *texture, t_game *data)
+{
+	mlx_put_image_to_window(data->mlx, data->mlx_win, texture,
+		x * TEXTURE_W, y * TEXTURE_H);
+}
+
 void	*map_char_to_img(t_game *data, char c)
 {
 	if (c == C_BORDER)
@@ -55,23 +61,18 @@ void	render_map(t_game *data)
 {
 	int		x;
 	int 	y;
-	int		i;
-	int		j;
 	void	*img;
 
-	i = 0;
 	y = 0;
-	while (data->map[i])
+	while (data->map[y])
 	{
-		j = 0;
 		x = 0;
-		while (data->map[i][j])
+		while (data->map[y][x])
 		{
-			img = map_char_to_img(data, data->map[i][j++]);
-			mlx_put_image_to_window(data->mlx, data->mlx_win, img, x, y);
-			x += TEXTURE_W;
+			img = map_char_to_img(data, data->map[y][x]);
+			render_texture(x, y, img, data);
+			x++;
 		}
-		i++;
-		y += TEXTURE_H;
+		y++;
 	}
 }

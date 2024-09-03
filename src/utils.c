@@ -6,21 +6,11 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:37:37 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/02 21:14:27 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/03 11:28:44 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
-
-void	free_2dmatrix(char **matrix)
-{
-	int	i;
-
-	i = 0;
-	while (matrix[i])
-		free(matrix[i++]);
-	free(matrix);
-}
 
 static void	free_textures(t_game *data)
 {
@@ -31,6 +21,16 @@ static void	free_textures(t_game *data)
 	i = 0;
 	while (data->textures[i])
 		mlx_destroy_image(data->mlx, data->textures[i++]);
+}
+
+void	free_2dmatrix(char **matrix)
+{
+	int	i;
+
+	i = 0;
+	while (matrix[i])
+		free(matrix[i++]);
+	free(matrix);
 }
 
 void	destroy_data(t_game *data)
