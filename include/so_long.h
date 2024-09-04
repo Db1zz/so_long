@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:29:47 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/04 14:42:50 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/04 19:45:04 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ typedef struct t_game
 	t_rect	win_rect;
 	t_pos	char_pos;
 	int		char_loot;
-	int		exit_status;
 }	t_game;
 
 /*
