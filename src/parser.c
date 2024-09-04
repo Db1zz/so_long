@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:33:19 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/04 16:39:53 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/04 19:44:58 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ static void	load_map(t_game *data, const char *map_path)
 
 	get_map_size(data, map_path);
 	if (!data->map_size.y || !data->map_size.x)
+	{
+		destroy_data(data);
 		fatal_error("parse_map incorrect map size.");
+	}
 	fd = open(map_path, O_RDONLY);
 	data->map = ft_calloc(data->map_size.y + 1, sizeof(char *));
 	if (!data->map)
@@ -86,7 +89,6 @@ void	parse_map(t_game *data, const char *map_path)
 	data->win_rect.h = data->map_size.y * TEXTURE_H;
 	if (!is_map_valid(data))
 	{
-		data->exit_status = EXIT_FAILURE;
 		destroy_data(data);
 		fatal_error("Map is not valid.");
 	}
