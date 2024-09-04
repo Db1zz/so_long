@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:37:35 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/04 16:18:46 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/04 19:58:44 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	*map_char_to_img(t_game *data, char c)
 		return (data->textures[3]);
 	if (c == C_EMPTY)
 		return (data->textures[4]);
-	fatal_error("Did you check your map lol");
+	destroy_data(data);
+	fatal_error("Found invalid character");
 	return (NULL);
 }
 
