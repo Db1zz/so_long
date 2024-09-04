@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:33:19 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/03 20:16:48 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/04 16:30:45 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ static void	get_map_size(t_game *data, const char *map_path)
 		fatal_error("get_map_size data is NULL.");
 	fd = open(map_path, O_RDONLY, 0644);
 	if (fd < 0)
+	{
+		destroy_data(data);
 		fatal_error("Map cannot be opened or it does not exist.");
+	}
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -65,11 +68,13 @@ static void	load_map(t_game *data, const char *map_path)
 static bool	is_map_valid(t_game *data)
 {
 	int	exit;	
+	int	player;
 
 	exit = 0;
+	player = 0;
 	if (!check_borders((const char **)data->map, &data->map_size))
 		return (false);
-	if (!get_items(&data->map_loot, &exit, data->map))
+	if (!get_items(&data->map_loot, &exit, &player, data->map) || player != 1)
 		return (false);
 	if (!are_objectives_reachable(data))
 		return (false);
@@ -86,6 +91,7 @@ void	parse_map(t_game *data, const char *map_path)
 	data->win_rect.h = data->map_size.y * TEXTURE_H;
 	if (!is_map_valid(data))
 	{
+		data->exit_status = EXIT_FAILURE;
 		destroy_data(data);
 		fatal_error("Map is not valid.");
 	}

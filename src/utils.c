@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:37:37 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/03 19:50:52 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:38:57 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,12 @@ static void	free_textures(t_game *data)
 	if (!data)
 		fatal_error("free_textures: t_game * is NULL");
 	i = 0;
-	while (i < 5)
-		mlx_destroy_image(data->mlx, data->textures[i++]);
+	while (i < TEXTURE_BUFFER_SIZE)
+	{
+		if (data->textures[i] != NULL)
+			mlx_destroy_image(data->mlx, data->textures[i]);
+		i++;
+	}
 }
 
 void	free_2dmatrix(char **matrix)

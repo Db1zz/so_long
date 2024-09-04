@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:37:35 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/03 19:52:22 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/04 16:18:46 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	get_textures(t_game *data)
 {
 	int			i;
 	const char	*paths[TEXTURE_BUFFER_SIZE] = {
-		"textures/Coat.xpm", "textures/Dirt.xpm", "textures/Glass.xpm",
-		"textures/Stone.xpm", "textures/Wood.xpm"};
+		"textures/Border.xpm", "textures/Exit.xpm", "textures/Loot.xpm",
+		"textures/Player.xpm", "textures/Empty.xpm"};
 
 	data->textures_rect.w = TEXTURE_W;
 	data->textures_rect.h = TEXTURE_H;

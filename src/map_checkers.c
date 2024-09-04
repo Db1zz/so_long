@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 08:29:55 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/03 20:14:17 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:17:17 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ bool	check_borders(const char **map, const t_pos *size)
 	return (true);
 }
 
-bool	get_items(int *loot, int *exit, char **map)
+bool	get_items(int *loot, int *exit, int *player, char **map)
 {
 	int		x;
 	int		y;
@@ -50,6 +50,8 @@ bool	get_items(int *loot, int *exit, char **map)
 				(*loot)++;
 			else if (map[y][x] == C_EXIT)
 				(*exit)++;
+			else if (player && map[y][x] == C_PLAYER)
+				(*player)++;
 			x++;
 		}
 		y++;
@@ -91,7 +93,7 @@ bool	are_objectives_reachable(t_game *data)
 		fatal_error(ERROR_MALLOC);
 	}
 	dfs(data->char_pos.x, data->char_pos.y, data->map_size, map_copy);
-	get_items(&loot, &exit, map_copy);
+	get_items(&loot, &exit, NULL, map_copy);
 	free_2dmatrix(map_copy);
 	return (loot == 0 && exit == 0);
 }

@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:35:26 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/03 20:22:32 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:06:30 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,13 @@
 
 static void	move_character(int x, int y, t_game *data)
 {
+	static int	movement = 0;
+
 	if (data->map[y][x] == C_BORDER || (data->map[y][x] == C_EXIT
 		&& data->char_loot != data->map_loot))
 		return ;
 	if (data->map[y][x] == C_EXIT && data->map_loot == data->char_loot)
-	{
-		destroy_data(data);
-		exit(EXIT_SUCCESS);
-	}
+		exit_program(data);
 	else if (data->map[y][x] == C_LOOT)
 	{
 		data->map[y][x] = C_EMPTY;
@@ -32,12 +31,11 @@ static void	move_character(int x, int y, t_game *data)
 	render_texture(x, y, data->textures[3], data);
 	data->char_pos.x = x;
 	data->char_pos.y = y;
+	ft_printf("counter: %d\n", ++movement);
 }
 
 int	user_input_handler(int key, t_game *data)
 {
-	ft_printf("x: %d y: %d\n", data->char_pos.x, data->char_pos.y);
-	ft_printf("%d\n", data->char_loot);
 	if (key == K_W)
 		move_character(data->char_pos.x, data->char_pos.y - 1, data);
 	else if (key == K_A)
@@ -47,9 +45,6 @@ int	user_input_handler(int key, t_game *data)
 	else if (key == K_D)
 		move_character(data->char_pos.x + 1, data->char_pos.y, data);
 	else if (key == K_ESC)
-	{
-		destroy_data(data);
-		exit(EXIT_SUCCESS);
-	}
+		exit_program(data);
 	return (0);
 }

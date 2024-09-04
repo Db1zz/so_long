@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 07:40:02 by gonische          #+#    #+#             */
-/*   Updated: 2024/08/31 13:42:47 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:21:38 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	display_error(const char *err)
 {
-	write(STDERR_FILENO, "So_long Error: ", 7);
+	write(STDERR_FILENO, "So_long Error: ", 16);
 	write(STDERR_FILENO, err, ft_strlen(err));
 	write(STDERR_FILENO, "\n", 1);
 }

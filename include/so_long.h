@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:29:47 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/03 19:51:43 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:42:50 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,13 @@ typedef struct t_game
 	t_rect	win_rect;
 	t_pos	char_pos;
 	int		char_loot;
+	int		exit_status;
 }	t_game;
+
+/*
+	main.c
+*/
+int		exit_program(t_game *data);
 
 /*
 	parser.c
@@ -101,7 +107,7 @@ t_game	*init_game(const char *map_path);
 	map_checker.c
 */
 bool	check_borders(const char **map, const t_pos *size);
-bool	get_items(int *loot, int *exit, char **map);
+bool	get_items(int *loot, int *exit, int *player, char **map);
 bool	are_objectives_reachable(t_game *data);
 
 /*
