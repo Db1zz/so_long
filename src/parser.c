@@ -6,7 +6,7 @@
 /*   By: gonische <gonische@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 05:33:19 by gonische          #+#    #+#             */
-/*   Updated: 2024/09/04 16:30:45 by gonische         ###   ########.fr       */
+/*   Updated: 2024/09/04 16:39:53 by gonische         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ static void	get_map_size(t_game *data, const char *map_path)
 	int		fd;
 	int		line_lenght;
 
-	if (!data)
-		fatal_error("get_map_size data is NULL.");
 	fd = open(map_path, O_RDONLY, 0644);
 	if (fd < 0)
 	{
@@ -34,10 +32,7 @@ static void	get_map_size(t_game *data, const char *map_path)
 		if (data->map_size.x == 0)
 			data->map_size.x = line_lenght;
 		if (data->map_size.x > line_lenght || data->map_size.x < line_lenght)
-		{
-			destroy_data(data);
-			fatal_error("Lines are of different lenght.");
-		}
+			(destroy_data(data), fatal_error("Lines are of different lenght."));
 		data->map_size.y++;
 		line = get_next_line(fd);
 	}
